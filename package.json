@@ -1,0 +1,19 @@
+{
+  "name": "max-cal",
+  "version": "1.0.0",
+  "description": "A calendar for your Max patch",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andrew Benson",
+  "license": "ISC",
+  "nodemonConfig": {
+    "ignore": "events-data.json"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express.js": "^1.0.0",
+    "js-datepicker": "^3.3.5"
+  }
+}
