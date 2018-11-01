@@ -54,9 +54,14 @@ const getNext = () => {
     return today.filter((event)=> event.time == nexttime );
 }
 
+const getAll = () => {
+    return fetchEvents();
+}
+
 module.exports={
     addEvent,
     removeEvent,
     getToday,
-    getNext
+    getNext,
+    getAll
 }

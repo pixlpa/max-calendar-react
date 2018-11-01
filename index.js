@@ -28,5 +28,8 @@ Max.addHandlers({
     },
     next: ()=>{
         Max.outlet('next',{'data': events.getNext()});
+    },
+    all: ()=>{
+        Max.outlet('all',{'data': events.getAll()});
     }
 });
