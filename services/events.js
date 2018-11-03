@@ -1,4 +1,5 @@
 const fs = require('fs');
+const Max = require('max-api');
 
 var fetchEvents = () => {
     try{
@@ -13,13 +14,14 @@ var saveEvents = (notes) => {
     fs.writeFileSync('./events-data.json',JSON.stringify(notes));
 };
 
+//combine the date and time inputs into one date string
 var makeTime = (event)=>{
     const timestring = `${event.date}T${event.time}`;
     return timestring;
 }
 
+//expects an object input based on the html form
 const addEvent = (args) => {
-    //read in events file
     let events = fetchEvents();
     //create the event object
     const ev = {
@@ -27,9 +29,7 @@ const addEvent = (args) => {
         'title': args.title,
         'action': args.action
     };
-    //push it to the array
     events.push(ev);
-    //save out the event file
     saveEvents(events);
     return ev;
 };
@@ -58,10 +58,17 @@ const getAll = () => {
     return fetchEvents();
 }
 
+const clearPrevious = () => {
+    let events = fetchEvents();
+    const future = events.filter((event)=> event.time >= now);
+    saveEvents(future);
+}
+
 module.exports={
     addEvent,
     removeEvent,
     getToday,
     getNext,
-    getAll
+    getAll,
+    clearPrevious
 }

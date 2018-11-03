@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 94.0, 79.0, 640.0, 480.0 ],
+		"rect" : [ 50.0, 79.0, 640.0, 480.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -39,11 +39,22 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-13",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 203.0, 244.444442749023438, 90.0, 22.0 ],
+					"text" : "print scheduled"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-12",
 					"maxclass" : "dict.view",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 229.0, 337.0, 200.0, 109.0 ]
+					"patching_rect" : [ 442.333343505859375, 343.666656494140625, 200.0, 109.0 ]
 				}
 
 			}
@@ -77,7 +88,7 @@
 					"maxclass" : "dict.view",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 121.0, 337.0, 100.0, 100.0 ]
+					"patching_rect" : [ 334.333343505859375, 343.666656494140625, 100.0, 100.0 ]
 				}
 
 			}
@@ -87,7 +98,7 @@
 					"maxclass" : "dict.view",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 14.0, 337.0, 100.0, 100.0 ]
+					"patching_rect" : [ 14.0, 337.0, 312.22222900390625, 183.333343505859375 ]
 				}
 
 			}
@@ -95,11 +106,11 @@
 				"box" : 				{
 					"id" : "obj-8",
 					"maxclass" : "newobj",
-					"numinlets" : 4,
-					"numoutlets" : 4,
-					"outlettype" : [ "", "", "", "" ],
-					"patching_rect" : [ 74.0, 210.0, 104.0, 22.0 ],
-					"text" : "route todo next all"
+					"numinlets" : 5,
+					"numoutlets" : 5,
+					"outlettype" : [ "", "", "", "", "" ],
+					"patching_rect" : [ 74.0, 210.0, 191.0, 22.0 ],
+					"text" : "route todo next all scheduledevent"
 				}
 
 			}
@@ -141,7 +152,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"offset" : [ 0.0, 0.0 ],
-					"patching_rect" : [ 362.5, 217.0, 400.0, 220.0 ],
+					"patching_rect" : [ 362.388885498046875, 72.0, 400.0, 220.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -176,7 +187,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 110.0, 123.0, 111.0, 22.0 ],
+					"patching_rect" : [ 74.0, 121.888885498046875, 111.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"autostart" : 0,
 						"defer" : 0,
@@ -252,6 +263,13 @@
 				"patchline" : 				{
 					"destination" : [ "obj-12", 0 ],
 					"source" : [ "obj-8", 2 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-13", 0 ],
+					"source" : [ "obj-8", 3 ]
 				}
 
 			}
