@@ -35,8 +35,8 @@ setInterval(setAgenda, 60*60*1000);
 
 //Express Setup***
 //serve the static page from the public subfolder
-app.use(express.static(__dirname+'/public'));
-const port = process.env.PORT || 3000;
+app.use(express.static(__dirname+'/client/build/'));
+const port = process.env.PORT || 5000;
 
 //set up form parsing
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -47,8 +47,15 @@ app.post('/addevent', function(req, res) {
     const data = req.body;
     const packed = events.addEvent(data);
     setAgenda();
-    res.send(packed);
+    const response = events.getAll();
+    res.send({ express: response});
 });
+
+app.get('/express_backend', (req, res) => {
+    const data = events.getAll();
+    res.send({ express: data });
+  });
+
 app.listen(port);
 
 //Max Setup****
