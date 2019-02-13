@@ -17,4 +17,5 @@
     "express.js": "^1.0.0",
     "js-datepicker": "^3.3.5"
   }
+    "boom": "^7.3.0",
 }

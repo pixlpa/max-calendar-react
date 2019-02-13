@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-var app = express();
+const { internal: internalServerError, isBoom, notFound: notFoundError } = require('boom');
 const Max = require('max-api');
+const app = express();
 
 //all of the event storage and retrieval happens in the "events" module
 const events = require('./services/events');
@@ -63,7 +64,29 @@ app.get('/express_backend', (req, res) => {
     res.send({ events: data,
             stats: patch_status
      });
-  });
+});
+
+// 404 - Not Found Handler
+app.use((req, res, next) => {
+    next(notFoundError());
+});
+
+// Error Handler
+app.use((err, req, res, next) => {
+    if (isBoom(err)) {
+        return void res
+            .status(err.output.statusCode)
+            .json(err.output.payload);
+    }
+
+    // Unhandled internal errors
+    const boomErr = internalServerError();
+    return void res
+        .status(boomErr.output.statusCode)
+        .json(boomErr.output.payload);
+});
+
+
 
 app.listen(port);
 
