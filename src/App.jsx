@@ -2,45 +2,45 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
 
+import EventEntries from './components/EventEntries';
+import EventForm from './components/EventForm';
+import Stats from './components/Stats';
 
-class App extends Component {
+export default class App extends Component {
     constructor(props) {
         super(props);
+        
         this.state = {
-            title: "",
-            date: "",
-            time: "",
-            action: "",
-          data: [],
-          stats: {}
-        }
-      }
+            data: [],
+            stats: {}
+        };
+
+        this._timer = null;
+    }
+
     componentDidMount() {
-        // Call our fetch function below once the component mounts
-        this.callBackendAPI()
-        .then(res =>  { 
-            this.setState({ data: res.events });
-            this.setState({ stats: res.stats });
-            this.timer = setInterval(()=> this.refresh(), 30000);
-        })
-        .catch(err => console.log(err));
+        // Call our refresh function below once the component mounts
+        this.refresh();
     }
 
     componentWillUnmount() {
-        clearInterval(this.timer);
-        this.timer = null;
+        // Cancel any running refresh timeouts
+        clearTimeout(this._timer);
+        this._timer = null;
     }
 
-    refresh() {
+    refresh = async () => {
         // Call our fetch function below once the component mounts
         console.log("refreshing");
-        this.callBackendAPI()
-        .then(res =>  { 
-            this.setState({ data: res.events });
-            this.setState({ stats: res.stats });
+        try {
+            const res = await this.callBackendAPI();
+            this.setState({ data: res.events, stats: res.stats });
             console.log(res.stats.db);
-        })
-        .catch(err => console.log(err));
+        } catch (err) {
+            console.error(err);
+        } finally {
+            this._timer = setTimeout(this.refresh, 30000);
+        }
     }
 
     // Fetches our GET route from the Express server. (Note the route we are fetching matches the GET route from server.js
@@ -48,78 +48,39 @@ class App extends Component {
         const response = await fetch('/express_backend');
         const body = await response.json();
     
-        if (response.status !== 200) {
-            throw Error(body.message) 
-        }
+        if (response.status !== 200) throw Error(body.message);
         return body;
     }
 
-    onChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
-    }
-
     //send data from form elements to the server's calendar interface
-    submit(e){
-        e.preventDefault();
-        // build a JSON object with the form data (stored in this.state)
-        let submission = {
-            "title": this.state.title,
-            "date": this.state.date,
-            "time": this.state.time,
-            "action": this.state.action
-        };
+    onSubmitEvent = async (eventData) => {
         //post to the express API and update the event listings
-        axios.post('/addevent', submission)
-        .then((result) => {
+        try {
+            const result = await axios.post('/addevent', eventData);
             this.setState({ data: result.data.express });
-        });
-      }
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     render() {
-        console.log("render called");
+        const { data, stats } = this.state;
         return (
             <div className="content-container">
-            <div
-                className="event-container">            
-            <h1>Add an Event</h1>
-                <div className="event-form">
-                <form onSubmit={this.submit.bind(this)}  className="form-inline">
-                    <input placeholder="title" name="title" className="form-control" onChange={this.onChange} />
-                    <input type="date" name="date" className="date-picker form-control"  onChange={this.onChange}
-                        />
-                    <input type="time" name="time" className="form-control" onChange={this.onChange} />
-                    <select placeholder="action" name="action" className="form-control" onChange={this.onChange} >
-                        <option>launch</option>
-                        <option>mute</option>
-                        <option>idle</option>
-                        <option>preset-next</option>
-                    </select>
-                    <button type = "submit" className="btn btn-success">Add Event</button>
-                </form>
+                <div className="event-container">
+                    <h1>Add an Event</h1>
+                    <EventForm onSubmitEvent={ this.onSubmitEvent } />
+                    <EventEntries events={ data } />
                 </div>
-                <div className="App-intro">{this.state.data.map((event,k)=>{
-                    const dateString = new Date(event.time).toString();
-                    return (
-                        <div key={k}
-                            className="event-item">
-                            <h3>{event.title}</h3>
-                            <p>Time: {dateString}<br />
-                            <em>Action: {event.action}</em></p>
-                            </div>
-                    );
-                })}</div>
+                <div className="status-container">
+                    <Stats
+                        db={ stats.db }
+                        fps={ stats.fps }
+                        preset={ stats.preset }
+                        soundon={ stats.soundon }
+                    />
+                </div>
             </div>
-            <div className="status-container">
-                <ul>
-                    <li>Audio: {this.state.stats.soundon}</li>
-                    <li>Graphics: {this.state.stats.fps} fps</li>
-                    <li>Sound Level: {this.state.stats.db} dB</li>
-                    <li>Current Program: <em>{this.state.stats.preset}</em></li>
-                </ul>
-            </div>
-            </div>
-        )
+        );
     }
 }
-
-export default App;
