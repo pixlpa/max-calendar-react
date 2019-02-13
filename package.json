@@ -8,7 +8,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint . --ext .js,.jsx",
+    "fix": "npm run lint -- --fix"
   },
   "author": "Andrew Benson",
   "license": "ISC",
@@ -17,6 +19,10 @@
   },
   "devDependencies": {
     "axios": "^0.18.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.13.0",
+    "eslint-config-c74": "^1.0.0",
+    "eslint-plugin-react": "^7.12.4",
     "js-datepicker": "^3.3.5",
     "react": "^16.6.3",
     "react-bootstrap": "^0.32.4",
