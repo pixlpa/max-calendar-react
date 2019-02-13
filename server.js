@@ -4,57 +4,57 @@ const { internal: internalServerError, isBoom, notFound: notFoundError } = requi
 const Max = require('max-api');
 const app = express();
 
-//all of the event storage and retrieval happens in the "events" module
+// all of the event storage and retrieval happens in the "events" module
 const events = require('./services/events');
 let agenda = null;
 let timeouts = [];
 let patch_status = {
-    "fps": "0.00",
-    "db": "0.00",
-    "soundon": "off",
-    "preset": "start"
-}
+    'fps': '0.00',
+    'db': '0.00',
+    'soundon': 'off',
+    'preset': 'start'
+};
 
 const scheduleEvent = (event) => {
     const timer = event.time - Date.now();
-    //console.log("ms",timer);
-    return setTimeout((action)=> Max.outlet("scheduledevent",action),timer,event.action);
+    // console.log("ms",timer);
+    return setTimeout((action)=> Max.outlet('scheduledevent', action), timer, event.action);
 };
 
 const setAgenda = async () => {
     agenda = await events.getToday();
-    //first clear the old timers
-    for (let i = 0; i < timeouts.length; i++){
+    // first clear the old timers
+    for (let i = 0; i < timeouts.length; i++) {
         clearTimeout(timeouts[i]);
     }
 
-    //clear the timeouts array
+    // clear the timeouts array
     timeouts = [];
-    //create new timeouts
-    for (let j = 0; j < agenda.length; j++){
+    // create new timeouts
+    for (let j = 0; j < agenda.length; j++) {
         timeouts.push(scheduleEvent(agenda[j]));
     }
 };
 
-//set up the timeouts once at launch and schedule an update in an hour just in case
+// set up the timeouts once at launch and schedule an update in an hour just in case
 setAgenda();
-setInterval(setAgenda, 60*60*1000);
-setInterval(()=>{Max.outlet("report")}, 30*1000);
+setInterval(setAgenda, 60 * 60 * 1000);
+setInterval(()=>{Max.outlet('report');}, 30 * 1000);
 
-//Express Setup***
-//serve the static page from the public subfolder
-app.use(express.static(__dirname+'/client/build/'));
+// Express Setup***
+// serve the static page from the public subfolder
+app.use(express.static(__dirname + '/client/build/'));
 const port = process.env.PORT || 5000;
 
-//set up form parsing
+// set up form parsing
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//handler for the event form input
+// handler for the event form input
 app.post('/addevent', async (req, res, next) => {
     try {
         const data = req.body;
-        const packed = await events.addEvent(data);
+        await events.addEvent(data);
         await setAgenda();
         const response = await events.getAll();
         return void res.send({ express: response });
@@ -93,19 +93,18 @@ app.use((err, req, res, next) => {
 });
 
 
-
 app.listen(port);
 
-//Max Setup****
-//set up the Max message inputs for node.script
+// Max Setup****
+// set up the Max message inputs for node.script
 Max.addHandlers({
     add: async (event) =>{
-        const added = await events.addEvent(event);
-        await setAgenda(); //update the upcoming timeouts just in case
+        await events.addEvent(event);
+        await setAgenda(); // update the upcoming timeouts just in case
     },
     today: async () => {
         const todo = {'data': await events.getToday() };
-        Max.outlet("todo", todo);
+        Max.outlet('todo', todo);
     },
     next: async () => {
         await Max.outlet('next', { 'data': events.getNext() });
@@ -114,7 +113,7 @@ Max.addHandlers({
         Max.outlet('all', { 'data': await events.getAll() });
     },
     patch_status: (stats) => {
-        patch_status = Object.assign(patch_status,stats);
+        patch_status = Object.assign(patch_status, stats);
         patch_status.db = stats.db.toFixed(2);
         patch_status.fps = stats.fps.toFixed(2);
     }

@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class EventForm extends Component {
+export default class EventForm extends React.Component {
 
     static propTypes = {
         onSubmitEvent: PropTypes.func.isRequired
     };
 
     static defaultState = {
-        title: "",
-        date: "",
-        time: "",
-        action: ""
+        title: '',
+        date: '',
+        time: '',
+        action: ''
     };
 
     constructor(props) {
@@ -27,22 +27,22 @@ export default class EventForm extends Component {
     onSubmit = (e) => {
         e.preventDefault();
         this.props.onSubmitEvent({
-            "title": this.state.title,
-            "date": this.state.date,
-            "time": this.state.time,
-            "action": this.state.action
+            'title': this.state.title,
+            'date': this.state.date,
+            'time': this.state.time,
+            'action': this.state.action
         });
 
         this.setState(Object.assign({}, this.constructor.defaultState));
     }
 
-    render(){
+    render() {
         const { action, date, time, title } = this.state;
 
         return (
             <div className="event-form">
                 <form onSubmit={ this.onSubmit } className="form-inline" >
-                    <input placeholder="title" name="title" className="form-control" onChange={ this.onChange } value={ title } />
+                    <input placeholder="title" name="title" className="form-control" onChange={ this.onChange } value={ title } />
                     <input type="date" name="date" className="date-picker form-control" onChange={ this.onChange } value={ date } />
                     <input type="time" name="time" className="form-control" onChange={ this.onChange } value={ time } />
                     <select placeholder="action" name="action" className="form-control" onChange={ this.onChange } value={ action } >
