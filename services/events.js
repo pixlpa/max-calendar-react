@@ -1,5 +1,6 @@
 const fs = require('fs');
 const Max = require('max-api');
+const uuid = require('uuid/v4');
 
 var fetchEvents = () => {
     try{
@@ -25,6 +26,7 @@ const addEvent = (args) => {
     let events = fetchEvents();
     //create the event object
     const ev = {
+        'id': uuid(),
         'time': new Date(makeTime(args)).getTime(),
         'title': args.title,
         'action': args.action
