@@ -7,6 +7,12 @@ const Max = require('max-api');
 const events = require('./services/events');
 let agenda = null;
 let timeouts = [];
+let patch_status = {
+    "fps": "0.00",
+    "db": "0.00",
+    "soundon": "off",
+    "preset": "start"
+}
 
 const scheduleEvent = (event) => {
     const timer = event.time - Date.now();
@@ -32,6 +38,7 @@ const setAgenda = ()=>{
 //set up the timeouts once at launch and schedule an update in an hour just in case
 setAgenda();
 setInterval(setAgenda, 60*60*1000);
+setInterval(()=>{Max.outlet("report")}, 30*1000);
 
 //Express Setup***
 //serve the static page from the public subfolder
@@ -53,7 +60,9 @@ app.post('/addevent', function(req, res) {
 
 app.get('/express_backend', (req, res) => {
     const data = events.getAll();
-    res.send({ express: data });
+    res.send({ events: data,
+            stats: patch_status
+     });
   });
 
 app.listen(port);
@@ -74,5 +83,10 @@ Max.addHandlers({
     },
     all: ()=>{
         Max.outlet('all',{'data': events.getAll()});
+    },
+    patch_status: (stats)=>{
+        patch_status = Object.assign(patch_status,stats);
+        patch_status.db = stats.db.toFixed(2);
+        patch_status.fps = stats.fps.toFixed(2);
     }
 });

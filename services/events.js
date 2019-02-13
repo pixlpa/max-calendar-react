@@ -49,9 +49,10 @@ const getToday = () => {
 }
 
 const getNext = () => {
-    const today = getToday();
-    let nexttime = today.reduce((min, p) => p.time < min ? p.time : min, today[0].time);
-    return today.filter((event)=> event.time == nexttime );
+    const today = Date.now();
+    let events = fetchEvents();
+    let matchedEvents = events.filter((note) => note.time >= today);
+    return matchedEvents;
 }
 
 const getAll = () => {
