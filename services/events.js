@@ -1,22 +1,25 @@
 const fs = require('fs');
+const { join } = require('path');
 const Max = require('max-api');
 const uuid = require('uuid/v4');
 
-var fetchEvents = () => {
+const EVENTS_FILEPATH = join(__dirname, "..", "events-data.json");
+
+const fetchEvents = () => {
     try{
-        var notesString = fs.readFileSync('./events-data.json');
+        var notesString = fs.readFileSync(EVENTS_FILEPATH);
         return JSON.parse(notesString);
     } catch (e){
         return [];
     }
 };
 
-var saveEvents = (notes) => {
-    fs.writeFileSync('./events-data.json',JSON.stringify(notes));
+const saveEvents = (notes) => {
+    fs.writeFileSync(EVENTS_FILEPATH,JSON.stringify(notes));
 };
 
 //combine the date and time inputs into one date string
-var makeTime = (event)=>{
+const makeTime = (event)=>{
     const timestring = `${event.date}T${event.time}`;
     return timestring;
 }
