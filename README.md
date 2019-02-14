@@ -1,19 +1,16 @@
 # max-calendar-react
 
-Implements a NodeJS-based event calendar for use in Max 8 (node.script). This version uses React/Bootstrap for the front end, allowing for a dynamic listing of existing scheduled events.
+Implements a NodeJS-based event calendar and status page for use in Max 8 (node.script). The interface uses React/Bootstrap for the front end, and an express API backend, allowing for a dynamic listing of scheduled events. This recipe could also serve as a basic template for creating React front ends for Max-based NodeJS projects.
 
-* Needs an added "delete" button for listed events
-* Edit existing events?
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was originally bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Production Use
 
-To use, you must first build a deployment version of the React site by navigating your terminal to "/max-calendar-react" and then running "npm run build". Open the Max patcher and hit "script start" to start the server, and then navigate your browser to localhost:5000
+To use as intended, you must first build a deployment version of the React site by navigating your terminal to "/max-calendar-react" and then running "npm run build". Open the Max patcher and hit "script start" to start the server, and then navigate your browser to localhost:5000
 
 ## Development
 
-To use this project in development mode, you must first start the node script in the patcher and then navigate to "max-calendar-react" and typing in "npm start". This will work through a proxy with the Max server, so it's good for developing new features.
+To use this project in development mode, you must first start the node script in the patcher and then navigate to "max-calendar-react" and typing in "npm start" in the Terminal. This will work through a proxy with the Max server, so it's good for developing new features.
 
 ## Available Scripts
 
