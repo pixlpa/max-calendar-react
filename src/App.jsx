@@ -14,7 +14,7 @@ export default class App extends React.Component {
             data: [],
             stats: {}
         };
-
+        this.delete = this.delete.bind(this);
         this._timer = null;
     }
 
@@ -30,12 +30,12 @@ export default class App extends React.Component {
     }
 
     refresh = async () => {
-        // Call our fetch function below once the component mounts
+        // Call our fetch function
         console.log('refreshing');
         try {
             const res = await this.callBackendAPI();
             this.setState({ data: res.events, stats: res.stats });
-            console.log(res.stats.db);
+            //console.log(res.stats.db);
         } catch (err) {
             console.error(err);
         } finally {
@@ -63,6 +63,18 @@ export default class App extends React.Component {
         }
     }
 
+    delete = async (id) => {
+        try {
+            const removal = this.state.data.filter(elem => elem.id === id)[0];
+            await axios.post('/delete',removal);
+            this.setState(prevState => ({
+                data: prevState.data.filter(el => el.id !== id )
+            }));
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
     render() {
         const { data, stats } = this.state;
         return (
@@ -70,11 +82,11 @@ export default class App extends React.Component {
                 <div className="event-container">
                     <h1>Add an Event</h1>
                     <EventForm onSubmitEvent={ this.onSubmitEvent } />
-                    <EventEntries events={ data } />
+                    <EventEntries events={ data } refresh={ this.refresh } delete={ this.delete } />
                 </div>
                 <div className="status-container">
                     <Stats
-                        db={ stats.db }
+                        amp={ stats.amp }
                         fps={ stats.fps }
                         preset={ stats.preset }
                         soundon={ stats.soundon }

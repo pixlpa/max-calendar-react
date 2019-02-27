@@ -6,11 +6,11 @@ This project was originally bootstrapped with [Create React App](https://github.
 
 ## Production Use
 
-To use as intended, you must first build a deployment version of the React site by navigating your terminal to "/max-calendar-react" and then running "npm run build". Open the Max patcher and hit "script start" to start the server, and then navigate your browser to localhost:5000
+To run as a production build, you must first build a deployment version of the React site by sending the "npm run build" message to the node.script. Then send "script start" to start the server, and then navigate your browser to localhost:5000
 
 ## Development
 
-To use this project in development mode, you must first start the node script in the patcher and then navigate to "max-calendar-react" and typing in "npm start" in the Terminal. This will work through a proxy with the Max server, so it's good for developing new features.
+For most usage, it will be sufficient to run a dev build of the React site. To do that, send the "script start" message followed by "script npm start" message. Since the site is actually running in React dev server, you must navigate your browser to "localhost:3000". This will work through a proxy with the Max server. This is useful when testing new site features.
 
 ## Available Scripts
 

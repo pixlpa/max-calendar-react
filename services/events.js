@@ -38,11 +38,10 @@ const addEvent = async (args) => {
     return ev;
 };
 
-const removeEvent = async (id) =>{
-    // read events file
-    // array filter using the id attribute
-    // delete
-    // save
+const removeEvent = async (args) =>{
+    const events = await fetchEvents();
+    const saved = events.filter((note) => note.id != args.id);
+    await saveEvents(saved);
 };
 
 const getToday = async () => {

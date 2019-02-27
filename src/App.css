@@ -25,6 +25,24 @@ h1 {
     padding: 5px;
 }
 
+.event-title{
+    display: flex;
+    justify-content: space-between;
+}
+.event-title h2{
+    flex-grow: 2;
+}
+
+.delete-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    height: 25px;
+    width: 25px;
+    border-radius: 5px;
+}
+
 .form-control {
     margin-top: 5px;
     margin-left: 5px;

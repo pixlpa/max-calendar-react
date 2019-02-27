@@ -20,6 +20,7 @@ export default class EventEntries extends React.Component {
                         action={ event.action }
                         time={ event.time }
                         title={ event.title }
+                        delete={ this.props.delete }
                     />)
                 }
             </div>

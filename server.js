@@ -10,7 +10,7 @@ let agenda = null;
 let timeouts = [];
 let patch_status = {
     'fps': '0.00',
-    'db': '0.00',
+    'amp': '0.00',
     'soundon': 'off',
     'preset': 'start'
 };
@@ -22,6 +22,7 @@ const scheduleEvent = (event) => {
 };
 
 const setAgenda = async () => {
+    await events.clearPrevious();
     agenda = await events.getToday();
     // first clear the old timers
     for (let i = 0; i < timeouts.length; i++) {
@@ -55,6 +56,20 @@ app.post('/addevent', async (req, res, next) => {
     try {
         const data = req.body;
         await events.addEvent(data);
+        await setAgenda();
+        const response = await events.getAll();
+        return void res.send({ express: response });
+    } catch (err) {
+        next(err);
+    }
+});
+
+// handler for the event form input
+app.post('/delete', async (req, res, next) => {
+    try {
+        const data = req.body;
+        console.log(data);
+        await events.removeEvent(data);
         await setAgenda();
         const response = await events.getAll();
         return void res.send({ express: response });
@@ -114,7 +129,7 @@ Max.addHandlers({
     },
     patch_status: (stats) => {
         patch_status = Object.assign(patch_status, stats);
-        patch_status.db = stats.db.toFixed(2);
-        patch_status.fps = stats.fps.toFixed(2);
+        patch_status.amp = stats.amp != undefined ? stats.amp.toFixed(2) : "0.00";
+        patch_status.fps = stats.fps != undefined ? stats.fps.toFixed(2) : "0.00";
     }
 });
