@@ -44,7 +44,7 @@ setInterval(()=>{Max.outlet('report');}, 30 * 1000);
 
 // Express Setup***
 // serve the static page from the public subfolder
-app.use(express.static(__dirname + '/client/build/'));
+app.use(express.static(__dirname + '/build/'));
 const port = process.env.PORT || 5000;
 
 // set up form parsing
