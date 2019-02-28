@@ -6,11 +6,11 @@ This project was originally bootstrapped with [Create React App](https://github.
 
 ## Production Use
 
-To run as a production build, you must first build a deployment version of the React site by sending the "npm run build" message to the node.script. Then send "script start" to start the server, and then navigate your browser to localhost:5000
+To run as a production build, you must first build a deployment version of the React site by sending the "npm run build" message to the node.script. Then send "script start" to start the server, and navigate your browser to localhost:5000
 
 ## Development
 
-For most usage, it will be sufficient to run a dev build of the React site. To do that, send the "script start" message followed by "script npm start" message. Since the site is actually running in React dev server, you must navigate your browser to "localhost:3000". This will work through a proxy with the Max server. This is useful when testing new site features.
+While developing the front end, it will be useful to run a dev build of the React site. To do that, send the "script start" message and then open a Terminal to the root folder of this recipe and type in npm start:client. This will work through a proxy with the Max server.
 
 ## Available Scripts
 
