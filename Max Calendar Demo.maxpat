@@ -39,6 +39,18 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-4",
+					"maxclass" : "newobj",
+					"numinlets" : 2,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "" ],
+					"patching_rect" : [ 142.047119140625, 349.9642333984375, 72.0, 22.0 ],
+					"text" : "route stdout"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"hidden" : 1,
 					"id" : "obj-52",
 					"maxclass" : "newobj",
@@ -318,7 +330,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 581.0471021334331, 149.424661750931079, 68.0, 22.0 ],
+					"patching_rect" : [ 142.047119140625, 389.924652099609375, 68.0, 22.0 ],
 					"text" : "print stdout"
 				}
 
@@ -6294,11 +6306,11 @@
 					"fontsize" : 16.0,
 					"id" : "obj-8",
 					"maxclass" : "newobj",
-					"numinlets" : 5,
-					"numoutlets" : 5,
-					"outlettype" : [ "", "", "", "", "" ],
-					"patching_rect" : [ 340.297102133433043, 70.155797958374023, 340.0, 26.0 ],
-					"text" : "route todo all scheduled stdout"
+					"numinlets" : 4,
+					"numoutlets" : 4,
+					"outlettype" : [ "", "", "", "" ],
+					"patching_rect" : [ 340.297088623046875, 70.155799865722656, 259.75, 26.0 ],
+					"text" : "route todo all scheduledevent"
 				}
 
 			}
@@ -6351,6 +6363,8 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 0,
 						"defer" : 0,
+						"node_bin_path" : "",
+						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
@@ -6414,6 +6428,15 @@
 		"lines" : [ 			{
 				"patchline" : 				{
 					"destination" : [ "obj-30", 0 ],
+					"order" : 1,
+					"source" : [ "obj-1", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-4", 0 ],
+					"order" : 0,
 					"source" : [ "obj-1", 1 ]
 				}
 
@@ -6421,7 +6444,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-8", 0 ],
-					"midpoints" : [ 67.130435466766357, 297.867144584655762, 322.630435466766357, 297.867144584655762, 322.630435466766357, 62.335733346899246, 349.797102133433043, 62.335733346899246 ],
+					"midpoints" : [ 67.130435466766357, 297.867144584655762, 322.630435466766357, 297.867144584655762, 322.630435466766357, 62.335733346899246, 349.797088623046875, 62.335733346899246 ],
 					"source" : [ "obj-1", 0 ]
 				}
 
@@ -6616,6 +6639,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-9", 0 ],
+					"source" : [ "obj-4", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-43", 0 ],
 					"source" : [ "obj-42", 0 ]
 				}
@@ -6769,7 +6799,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-20", 0 ],
-					"source" : [ "obj-8", 4 ]
+					"source" : [ "obj-8", 3 ]
 				}
 
 			}
@@ -6789,13 +6819,6 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-9", 0 ],
-					"source" : [ "obj-8", 3 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-73", 0 ],
 					"source" : [ "obj-80", 0 ]
 				}
@@ -6804,9 +6827,9 @@
  ],
 		"parameters" : 		{
 			"obj-38::obj-34" : [ "mc.live.gain~[2]", "mc.live.gain~", 0 ],
+			"obj-38::obj-32" : [ "mc.live.gain~", "mc.live.gain~", 0 ],
 			"obj-39" : [ "Master", "Master", 0 ],
 			"obj-38::obj-33" : [ "mc.live.gain~[1]", "mc.live.gain~", 0 ],
-			"obj-38::obj-32" : [ "mc.live.gain~", "mc.live.gain~", 0 ],
 			"parameterbanks" : 			{
 
 			}

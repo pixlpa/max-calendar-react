@@ -17,7 +17,6 @@ let patch_status = {
 
 const scheduleEvent = (event) => {
     const timer = event.time - Date.now();
-    // console.log("ms",timer);
     return setTimeout((action)=> Max.outlet('scheduledevent', action), timer, event.action);
 };
 
@@ -28,7 +27,6 @@ const setAgenda = async () => {
     for (let i = 0; i < timeouts.length; i++) {
         clearTimeout(timeouts[i]);
     }
-
     // clear the timeouts array
     timeouts = [];
     // create new timeouts
